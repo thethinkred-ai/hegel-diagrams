@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Маркс и Ленин — материалистическое применение действительности</title>
+<style>
+:root {
+  --bg: #fafafa;
+  --text: #1a1a1a;
+  --accent: #C9A227;
+  --accent-light: #f5e9c8;
+  --marx: #c0392b;
+  --marx-light: #fce8e8;
+  --lenin: #2c7a2c;
+  --lenin-light: #e8f8e8;
+  --arrow: #555555;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  padding: 2rem 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+h1 {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+.subtitle {
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+
+.section-header {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 2rem 0 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-align: center;
+}
+.section-header.marx { background: var(--marx-light); color: var(--marx); }
+.section-header.lenin { background: var(--lenin-light); color: var(--lenin); }
+
+.mapping {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin: 1.5rem 0;
+}
+.mapping-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  width: 100%;
+  max-width: 700px;
+}
+.mapping-cell {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  text-align: center;
+  font-size: 0.88rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.mapping-cell .cell-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #999;
+  margin-bottom: 0.2rem;
+}
+.mapping-cell .cell-value {
+  font-weight: 600;
+}
+.mapping-cell.hegel { background: #f0f0f0; border: 1px solid #ddd; }
+.mapping-cell.marx { background: var(--marx-light); border: 1px solid var(--marx); }
+.mapping-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.5rem;
+  font-size: 1.3rem;
+  color: var(--arrow);
+}
+.mapping-spacer { height: 8px; }
+
+.reversal {
+  background: #fff;
+  border: 2px solid var(--marx);
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  margin: 1.5rem 0;
+}
+.reversal h3 {
+  font-size: 1rem;
+  color: var(--marx);
+  margin-bottom: 0.5rem;
+}
+.reversal .reversal-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin: 0.8rem 0;
+}
+.reversal-box {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+.reversal-box.ideal { background: #fce8e8; border: 1px solid #ccc; }
+.reversal-box.material { background: var(--marx-light); border: 2px solid var(--marx); }
+.reversal-arrow {
+  font-size: 1.3rem;
+  color: var(--marx);
+}
+.reversal p {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #444;
+  margin-top: 0.5rem;
+}
+
+.lenin-block {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-left: 4px solid var(--lenin);
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  margin: 1.5rem 0;
+}
+.lenin-block h3 {
+  font-size: 1rem;
+  color: var(--lenin);
+  margin-bottom: 0.5rem;
+}
+.lenin-block p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #444;
+}
+.lenin-block .lenin-quote {
+  font-style: italic;
+  border-left: 3px solid var(--lenin);
+  padding-left: 1rem;
+  margin: 0.8rem 0;
+  color: #555;
+}
+
+.practice {
+  background: var(--accent-light);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  margin: 1.5rem 0;
+}
+.practice h3 {
+  font-size: 1rem;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+.practice p {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #444;
+}
+
+@media (max-width: 600px) {
+  .mapping-row { flex-direction: column; }
+  .mapping-arrow { transform: rotate(90deg); padding: 0.2rem 0; }
+}
+</style>
+</head>
+<body>
+
+<h1>Маркс и Ленин: действительность в политэкономии</h1>
+<p class="subtitle">Случайность → Необходимость → Свобода в «Капитале» и в политической практике</p>
+
+<div class="section-header marx">Маркс: «Капитал», т. I</div>
+
+<div class="mapping">
+  <div class="mapping-row">
+    <div class="mapping-cell hegel">
+      <span class="cell-label">Гегель</span>
+      <span class="cell-value">Случайность (голый факт)</span>
+    </div>
+    <div class="mapping-arrow">→</div>
+    <div class="mapping-cell marx">
+      <span class="cell-label">Маркс</span>
+      <span class="cell-value">Кризис как «случайное событие»</span>
+    </div>
+  </div>
+  <div class="mapping-spacer"></div>
+  <div class="mapping-row">
+    <div class="mapping-cell hegel">
+      <span class="cell-label">Гегель</span>
+      <span class="cell-value">Относительная необходимость (при условиях)</span>
+    </div>
+    <div class="mapping-arrow">→</div>
+    <div class="mapping-cell marx">
+      <span class="cell-label">Маркс</span>
+      <span class="cell-value">Кризис необходим при капиталистических отношениях</span>
+    </div>
+  </div>
+  <div class="mapping-spacer"></div>
+  <div class="mapping-row">
+    <div class="mapping-cell hegel">
+      <span class="cell-label">Гегель</span>
+      <span class="cell-value">Абсолютная необходимость (природа вещи)</span>
+    </div>
+    <div class="mapping-arrow">→</div>
+    <div class="mapping-cell marx">
+      <span class="cell-label">Маркс</span>
+      <span class="cell-value">Противоречие производства и потребления — сущность капитала</span>
+    </div>
+  </div>
+  <div class="mapping-spacer"></div>
+  <div class="mapping-row">
+    <div class="mapping-cell hegel">
+      <span class="cell-label">Гегель</span>
+      <span class="cell-value">Свобода (осознанная необходимость)</span>
+    </div>
+    <div class="mapping-arrow">→</div>
+    <div class="mapping-cell marx">
+      <span class="cell-label">Маркс</span>
+      <span class="cell-value">Классовая борьба — познание и изменение условий</span>
+    </div>
+  </div>
+</div>
+
+<div class="reversal">
+  <h3>Материалистическое переворачивание</h3>
+  <div class="reversal-flow">
+    <div class="reversal-box ideal">Гегель: необходимость (идея) → история (действительность)</div>
+    <div class="reversal-arrow">⇄</div>
+    <div class="reversal-box material">Маркс: труд производителей → необходимость (общественные отношения)</div>
+  </div>
+  <p>
+    У Гегеля движение идёт от логической категории к историческому. У Маркса — от реально существующих общественных отношений к раскрытию их необходимости. Не необходимость господствует над историей, а люди делают историю в данных условиях.
+  </p>
+</div>
+
+<div class="section-header lenin">Ленин: «Философские тетради»</div>
+
+<div class="lenin-block">
+  <h3>Свобода как познание необходимости</h3>
+  <div class="lenin-quote">
+    Необходимость не становится свободой, — если она есть, — а свобода есть осознанная необходимость. Ленин показывает, что гегелевский переход от необходимости к свободе — не метафора, а логическое выведение.
+  </div>
+</div>
+
+<div class="lenin-block">
+  <h3>Практика как критерий истины</h3>
+  <p>
+    Если действительность обнаруживает себя через свои конкретные формы, то проверить её можно только в практике. Поэтому практика — критерий истины. Это материалистическое развитие гегелевской идеи: действительность обнаруживает себя не в мышлении, а в действии.
+  </p>
+</div>
+
+<div class="practice">
+  <h3>Применение сегодня</h3>
+  <p>
+    <b>Платформенный капитализм:</b> конкретные сделки — случайность; монополия на данные — условие относительной необходимости; присвоение прибавочной стоимости — абсолютная необходимость (природа системы). Осознание этих закономерностей — путь к свободе: организация работников цифровой экономики.
+  </p>
+  <p style="margin-top: 0.5rem;">
+    <b>Государство:</b> конкретные политики — случайность; классовые отношения — условие; государство как инструмент классового господства — абсолютная необходимость. Отмирание государства — переход от необходимости к свободе.
+  </p>
+</div>
+
+</body>
+</html>

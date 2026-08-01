@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Три уровня действительности — Случайность, Необходимость, Свобода</title>
+<style>
+:root {
+  --bg: #fafafa;
+  --text: #1a1a1a;
+  --accent: #C9A227;
+  --accent-light: #f5e9c8;
+  --formal: #4a6fa5;
+  --formal-light: #e8f0fe;
+  --real: #b87333;
+  --real-light: #fdf0e3;
+  --absolute: #2c7a2c;
+  --absolute-light: #e8f8e8;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  padding: 2rem 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+h1 {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+.subtitle {
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+
+.three-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+.column {
+  border-radius: 16px;
+  padding: 1.2rem;
+  border: 2px solid;
+}
+.column.formal { background: var(--formal-light); border-color: var(--formal); }
+.column.real { background: var(--real-light); border-color: var(--real); }
+.column.absolute { background: var(--absolute-light); border-color: var(--absolute); }
+
+.column-header {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+}
+.column.formal .column-header { color: var(--formal); }
+.column.real .column-header { color: var(--real); }
+.column.absolute .column-header { color: var(--absolute); }
+
+.column-subtitle {
+  text-align: center;
+  font-size: 0.78rem;
+  color: #777;
+  margin-bottom: 1rem;
+}
+
+.column-row {
+  margin: 0.6rem 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.column-row .row-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #999;
+  margin-bottom: 0.2rem;
+  display: block;
+}
+.column-row .row-value {
+  font-weight: 500;
+}
+
+.flow-section {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+}
+.flow-section h3 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.flow-chain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
+.flow-box {
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+  min-width: 120px;
+}
+.flow-box.formal { background: var(--formal-light); border: 2px solid var(--formal); }
+.flow-box.real { background: var(--real-light); border: 2px solid var(--real); }
+.flow-box.absolute { background: var(--absolute-light); border: 2px solid var(--absolute); }
+.flow-box.result { background: var(--accent-light); border: 2px solid var(--accent); }
+.flow-arrow {
+  font-size: 1.5rem;
+  color: #999;
+}
+
+.marx-section {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-left: 4px solid #c0392b;
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  margin: 2rem 0;
+}
+.marx-section h3 {
+  font-size: 1rem;
+  color: #c0392b;
+  margin-bottom: 0.5rem;
+}
+.marx-section p {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #444;
+}
+.marx-section .marx-quote {
+  font-style: italic;
+  border-left: 3px solid #c0392b;
+  padding-left: 1rem;
+  margin: 0.8rem 0;
+  color: #555;
+}
+
+@media (max-width: 700px) {
+  .three-columns { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<h1>Три уровня действительности</h1>
+<p class="subtitle">Случайность → Относительная необходимость → Абсолютная необходимость → Свобода</p>
+
+<div class="three-columns">
+  <div class="column formal">
+    <div class="column-header">Случайность</div>
+    <div class="column-subtitle">Формальная действительность</div>
+    <div class="column-row">
+      <span class="row-label">Действительность</span>
+      <span class="row-value">Голое «это есть», без основания</span>
+    </div>
+    <div class="column-row">
+      <span class="row-label">Возможность</span>
+      <span class="row-value">Формальная: всё, что не противоречит себе</span>
+    </div>
+    <div class="column-row">
+      <span class="row-label">Необходимость</span>
+      <span class="row-value">Пустая тавтология: A необходимо, ибо не-A противоречиво</span>
+    </div>
+    <div class="column-row">
+      <span class="row-label">Противоречие</span>
+      <span class="row-value">Основано (есть причины) и не основано (они внешни)</span>
+    </div>
+    <div class="column-row">
+      <span class="row-label">Пример</span>
+      <span class="row-value">«Кризис случаен» — мог бы не случиться</span>
+    </div>
+  </div>
+
+  <div class="column real">
+    <div class="column-header">Относительная необходимость</div>
+    <div class="column-subtitle">Реальная действительность</div>
+    <div class="column-row">
+      <span class="row-label">Действительность</span>
+      <span class="row-value">Вещь со свойствами; обнаруживает себя через то, что производит</span>
+    </div>
+    <div class="column-row">
+      <span class="row-label">Возможность</span>
+      <span class="row-value">Реальная: обеспеченная наличными условиями</span>
+    </div>
+    <div class="column-row">
+      <span class="row-label">Необходимость</span>
+      <span class="row-value">Необходимость при условиях: когда все условия налицо</span>
+    </div>
+    <div class="column-row">
+      <span class="row-label">Противоречие</span>
+      <span class="row-value">Зависит от случайных условий; условия могли быть иными</span>
+    </div>
+    <div class="column-row">
+      <span class="row-label">Пример</span>
+      <span class="row-value">«Кризис необходим при условиях капитализма»</span>
+    </div>
+  </div>
+
+  <div class="column absolute">
+    <div class="column-header">Абсолютная необходимость</div>
+    <div class="column-subtitle">Бытие, которое есть потому, что есть</div>
+    <div class="column-row">
+      <span class="row-label">Действительность</span>
+      <span class="row-value">Снимает все условия — источник в самой вещи</span>
+    </div>
+    <div class="column-row">
+      <span class="row-label">Возможность</span>
+      <span class="row-value">Совпадает с действительностью — нет иного</span>
+    </div>
+    <div class="column-row">
+      <span class="row-label">Необходимость</span>
+      <span class="row-value">Не опосредствована ничем внешним; слепая</span>
+    </div>
+    <div class="column-row">
+      <span class="row-label">Противоречие</span>
+      <span class="row-value">Слепа — не знает себя; истина её — свобода</span>
+    </div>
+    <div class="column-row">
+      <span class="row-label">Пример</span>
+      <span class="row-value">«Природа капитализма — в противоречии; кризис абсолютно необходим»</span>
+    </div>
+  </div>
+</div>
+
+<div class="flow-section">
+  <h3>Движение категорий: от случайности к свободе</h3>
+  <div class="flow-chain">
+    <div class="flow-box formal">Случайность<br><small>могло бы не быть</small></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box real">Относительная<br>необходимость<br><small>при условиях</small></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box absolute">Абсолютная<br>необходимость<br><small>без условий</small></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box result">Свобода<br><small>осознанная<br>необходимость</small></div>
+  </div>
+</div>
+
+<div class="marx-section">
+  <h3>Маркс: материалистическое переворачивание</h3>
+  <p>
+    У Гегеля движение идёт от логической категории к конкретному. У Маркса — от реально существующих общественных отношений к раскрытию их необходимости.
+  </p>
+  <div class="marx-quote">
+    Люди сами делают свою историю, но они её делают не так, как им вздумается, при обстоятельствах, которые не сами они выбрали, а которые непосредственно имеются налицо, даны им из прошлого.
+  </div>
+  <p>
+    <b>Кризис:</b> случаен (формально) → относительно необходим (при условиях капитализма) → абсолютно необходим (природа системы в противоречии). Но осознание этой необходимости — путь к свободе: рабочие, познавшие закономерности капитализма, организуются и действуют.
+  </p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Карта курса — Урок 13: Субстанция</title>
+<style>
+:root {
+  --bg: #fafafa;
+  --text: #1a1a1a;
+  --accent: #C9A227;
+  --accent-light: #f5e9c8;
+  --done: #2c7a2c;
+  --done-light: #e8f8e8;
+  --current: #C9A227;
+  --current-light: #f5e9c8;
+  --todo: #999;
+  --todo-light: #f0f0f0;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  padding: 2rem 1rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+h1 {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+.subtitle {
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+
+.map-section {
+  margin: 1rem 0;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+}
+.map-section.done { background: var(--done-light); border-left: 4px solid var(--done); }
+.map-section.current { background: var(--current-light); border-left: 4px solid var(--current); }
+.map-section.todo { background: var(--todo-light); border-left: 4px solid var(--todo); }
+
+.map-section h2 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.map-section.done h2 { color: var(--done); }
+.map-section.current h2 { color: var(--current); }
+.map-section.todo h2 { color: var(--todo); }
+
+.map-section .badge {
+  font-size: 0.7rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.badge.done { background: var(--done); color: #fff; }
+.badge.current { background: var(--accent); color: #fff; }
+.badge.todo { background: var(--todo); color: #fff; }
+
+.map-section ul {
+  list-style: none;
+  padding: 0;
+}
+.map-section li {
+  padding: 0.3rem 0;
+  font-size: 0.88rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.map-section li .check {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.map-section.done li .check { background: var(--done); color: #fff; }
+.map-section.current li .check { background: var(--accent); color: #fff; }
+.map-section.todo li .check { background: #ddd; color: #999; }
+
+.map-section li.current-item {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.connector {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #ccc;
+  margin: 0.3rem 0;
+}
+
+.position-box {
+  background: #fff;
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  text-align: center;
+}
+.position-box h3 {
+  font-size: 0.9rem;
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+}
+.position-box p {
+  font-size: 0.85rem;
+  color: #444;
+  line-height: 1.5;
+}
+</style>
+</head>
+<body>
+
+<h1>Карта курса</h1>
+<p class="subtitle">Урок 13 — Субстанция</p>
+
+<div class="position-box">
+  <h3>Где мы находимся</h3>
+  <p>Учение о сущности → Действительность → Абсолютное отношение<br>
+  <b>Субстанция</b> — промежуточная категория между необходимостью и причинностью</p>
+</div>
+
+<div class="map-section done">
+  <h2>Учение о бытии <span class="badge done">Завершено</span></h2>
+  <ul>
+    <li><span class="check">✓</span>Уроки 1–8: Бытие → Ничто → Становление → Качество → Количество → Мера</li>
+  </ul>
+</div>
+
+<div class="connector">↓</div>
+
+<div class="map-section done">
+  <h2>Учение о сущности — Рефлексия <span class="badge done">Завершено</span></h2>
+  <ul>
+    <li><span class="check">✓</span>Урок 8: Сущность как рефлексия</li>
+    <li><span class="check">✓</span>Урок 9: Основание</li>
+  </ul>
+</div>
+
+<div class="connector">↓</div>
+
+<div class="map-section done">
+  <h2>Учение о сущности — Явление <span class="badge done">Завершено</span></h2>
+  <ul>
+    <li><span class="check">✓</span>Урок 10: Явление</li>
+  </ul>
+</div>
+
+<div class="connector">↓</div>
+
+<div class="map-section done">
+  <h2>Учение о сущности — Действительность <span class="badge done">Завершено</span></h2>
+  <ul>
+    <li><span class="check">✓</span>Урок 11: Абсолютное (causa sui, атрибут, модус)</li>
+    <li><span class="check">✓</span>Урок 12: Случайность → Необходимость → Абсолютная необходимость</li>
+  </ul>
+</div>
+
+<div class="connector">↓</div>
+
+<div class="map-section current">
+  <h2>Абсолютное отношение <span class="badge current">Сейчас</span></h2>
+  <ul>
+    <li class="current-item"><span class="check">●</span>Урок 13: <b>Субстанция</b> — causa sui, мощь, акциденции</li>
+    <li><span class="check">○</span>Урок 14: Причинность и взаимодействие</li>
+  </ul>
+</div>
+
+<div class="connector">↓</div>
+
+<div class="map-section todo">
+  <h2>Учение о понятии <span class="badge todo">Далее</span></h2>
+  <ul>
+    <li><span class="check">○</span>Понятие → Суждение → Умозаключение → Объект → Идея</li>
+  </ul>
+</div>
+
+</body>
+</html>

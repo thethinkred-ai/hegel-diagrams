@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Узловая линия — переход количества в качество</title>
+<style>
+:root {
+  --bg: #fafafa;
+  --text: #1a1a1a;
+  --node-bg: #ffffff;
+  --node-border: #333333;
+  --accent: #C9A227;
+  --accent-light: #f5e9c8;
+  --arrow: #555555;
+  --gradual: #4a90d9;
+  --leap: #c0392b;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  padding: 2rem 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+h1 {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+.subtitle {
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+
+/* ── Nodal line scale ── */
+.nodal-scale {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  margin: 2rem 0;
+}
+.scale-track {
+  position: relative;
+  height: 60px;
+  margin: 3rem 1rem 2rem;
+}
+.scale-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, var(--gradual), var(--gradual));
+  border-radius: 2px;
+  transform: translateY(-50%);
+}
+.scale-line::after {
+  content: '';
+  position: absolute;
+  right: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 12px solid var(--gradual);
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+}
+.scale-label-left {
+  position: absolute;
+  left: 0;
+  top: -25px;
+  font-size: 0.75rem;
+  color: #777;
+}
+.scale-label-right {
+  position: absolute;
+  right: 0;
+  top: -25px;
+  font-size: 0.75rem;
+  color: #777;
+}
+.scale-label-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -25px;
+  font-size: 0.75rem;
+  color: #777;
+}
+
+/* Nodes on the scale */
+.scale-node {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--leap);
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 2px var(--leap);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+.scale-node:hover {
+  transform: translate(-50%, -50%) scale(1.4);
+}
+.scale-node-label {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 25px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--text);
+}
+.scale-node-desc {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 42px;
+  font-size: 0.68rem;
+  color: #666;
+  white-space: nowrap;
+}
+
+/* Regions between nodes */
+.scale-region {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 30px;
+  border-radius: 4px;
+  opacity: 0.15;
+  z-index: 1;
+}
+
+/* ── Process diagram ── */
+.process-diagram {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+}
+.process-diagram h3 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.process-step {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.8rem 0;
+}
+.process-step-num {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff;
+}
+.process-step-num.gradual { background: var(--gradual); }
+.process-step-num.leap { background: var(--leap); }
+.process-step-num.new { background: var(--accent); }
+.process-step-text {
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+.process-step-text strong {
+  display: block;
+  font-size: 0.95rem;
+  margin-bottom: 0.15rem;
+}
+.process-arrow {
+  text-align: center;
+  font-size: 1.5rem;
+  color: var(--arrow);
+  margin: 0.2rem 0;
+}
+
+/* ── Comparison table ── */
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.88rem;
+}
+.comparison-table th {
+  background: var(--accent-light);
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid var(--accent);
+}
+.comparison-table td {
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid #eee;
+}
+.comparison-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ── Legend ── */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin: 1.5rem 0;
+  font-size: 0.8rem;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.legend-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+/* ── Info panel ── */
+.info-panel {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1.2rem;
+  margin-top: 1.5rem;
+  display: none;
+}
+.info-panel.active { display: block; }
+.info-panel h4 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent);
+}
+.info-panel p {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #444;
+}
+
+@media (max-width: 600px) {
+  .scale-node-desc { display: none; }
+  .process-step { flex-direction: column; align-items: flex-start; gap: 0.3rem; }
+}
+</style>
+</head>
+<body>
+
+<h1>Узловая линия — переход количества в качество</h1>
+<p class="subtitle">Постепенность и скачок — две стороны единого процесса развития</p>
+
+<!-- Legend -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--gradual)"></div>Постепенное количественное изменение</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--leap)"></div>Узел (качественный скачок)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div>Новое качество</div>
+</div>
+
+<!-- Nodal line scale: water phase transitions -->
+<div class="nodal-scale">
+  <h3 style="text-align:center; margin-bottom:0.5rem;">Пример: фазовые переходы воды</h3>
+  <p style="text-align:center; font-size:0.85rem; color:#666; margin-bottom:0.5rem;">Субстрат (H₂O) остаётся тем же — качество меняется скачкообразно</p>
+
+  <div class="scale-track">
+    <div class="scale-label-left">−50°C</div>
+    <div class="scale-label-center">50°C</div>
+    <div class="scale-label-right">150°C</div>
+
+    <!-- Regions -->
+    <div class="scale-region" style="left:0%; width:25%; background:#4a90d9;"></div>
+    <div class="scale-region" style="left:25%; width:50%; background:#C9A227;"></div>
+    <div class="scale-region" style="left:75%; width:25%; background:#c0392b;"></div>
+
+    <!-- Nodes (0°C at 25%, 100°C at 75%) -->
+    <div class="scale-node" style="left:25%;" data-info="freeze">
+      <div class="scale-node-label">0°C</div>
+      <div class="scale-node-desc">лёд → жидкость</div>
+    </div>
+    <div class="scale-node" style="left:75%;" data-info="boil">
+      <div class="scale-node-label">100°C</div>
+      <div class="scale-node-desc">жидкость → пар</div>
+    </div>
+  </div>
+
+  <div style="display:flex; justify-content:space-around; margin-top:2.5rem; font-size:0.82rem; text-align:center;">
+    <div style="color:#4a90d9; font-weight:600;">Твёрдое тело<br><span style="font-weight:400; color:#666;">(лёд)</span></div>
+    <div style="color:var(--accent); font-weight:600;">Жидкость<br><span style="font-weight:400; color:#666;">(вода)</span></div>
+    <div style="color:var(--leap); font-weight:600;">Газ<br><span style="font-weight:400; color:#666;">(пар)</span></div>
+  </div>
+</div>
+
+<!-- Process diagram: quantity → quality -->
+<div class="process-diagram">
+  <h3>Логика узловой линии</h3>
+
+  <div class="process-step">
+    <div class="process-step-num gradual">1</div>
+    <div class="process-step-text">
+      <strong>Количественные изменения</strong>
+      Нагрев воды от 20°C до 30°C — постепенное изменение, не создающее нового качества
+    </div>
+  </div>
+  <div class="process-arrow">↓</div>
+
+  <div class="process-step">
+    <div class="process-step-num gradual">2</div>
+    <div class="process-step-text">
+      <strong>Накопление</strong>
+      Количественные изменения накапливаются в пределах меры — качество остаётся безразличным
+    </div>
+  </div>
+  <div class="process-arrow">↓</div>
+
+  <div class="process-step">
+    <div class="process-step-num leap">3</div>
+    <div class="process-step-text">
+      <strong>Граница меры (узел)</strong>
+      При 100°C количество достигает границы меры — дальнейшее изменение невозможно в старом качестве
+    </div>
+  </div>
+  <div class="process-arrow">↓</div>
+
+  <div class="process-step">
+    <div class="process-step-num leap">4</div>
+    <div class="process-step-text">
+      <strong>Скачок</strong>
+    Качественный переход: жидкость становится паром. Не постепенное загустение, а разрыв непрерывности
+    </div>
+  </div>
+  <div class="process-arrow">↓</div>
+
+  <div class="process-step">
+    <div class="process-step-num new">5</div>
+    <div class="process-step-text">
+      <strong>Новое качество</strong>
+      Пар — новое качество. Субстрат (H₂O) тот же, но способ существования изменился
+    </div>
+  </div>
+</div>
+
+<!-- Comparison: gradualness vs leap -->
+<table class="comparison-table">
+  <thead>
+    <tr>
+      <th>Постепенность</th>
+      <th>Скачок</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Изменение в пределах меры</td>
+      <td>Переход границы меры</td>
+    </tr>
+    <tr>
+      <td>Количество меняется, качество сохраняется</td>
+      <td>Количество становится качеством</td>
+    </tr>
+    <tr>
+      <td>Нагрев воды от 20°C до 30°C</td>
+      <td>Закипание при 100°C</td>
+    </tr>
+    <tr>
+      <td>Реформа — изменение в пределах меры</td>
+      <td>Революция — нарушение меры</td>
+    </tr>
+    <tr>
+      <td>Эволюция создаёт условия</td>
+      <td>Скачок открывает новую эволюционную стадию</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Political economy example -->
+<div class="process-diagram">
+  <h3>Узловая линия капитализма (по Ленину)</h3>
+
+  <div class="process-step">
+    <div class="process-step-num gradual">1</div>
+    <div class="process-step-text">
+      <strong>Свободная конкуренция</strong>
+      Мера капитализма XIX века
+    </div>
+  </div>
+  <div class="process-arrow">↓ накопление капитала</div>
+
+  <div class="process-step">
+    <div class="process-step-num gradual">2</div>
+    <div class="process-step-text">
+      <strong>Концентрация производства</strong>
+      Количественное накопление в пределах меры
+    </div>
+  </div>
+  <div class="process-arrow">↓ узел</div>
+
+  <div class="process-step">
+    <div class="process-step-num leap">3</div>
+    <div class="process-step-text">
+      <strong>Монополия (скачок)</strong>
+      Качественный переход: не «больше конкуренции», а новое качество
+    </div>
+  </div>
+  <div class="process-arrow">↓ узел</div>
+
+  <div class="process-step">
+    <div class="process-step-num leap">4</div>
+    <div class="process-step-text">
+      <strong>Финансовый капитал</strong>
+      Слияние банковского и промышленного капитала — новое качество
+    </div>
+  </div>
+  <div class="process-arrow">↓ узел</div>
+
+  <div class="process-step">
+    <div class="process-step-num new">5</div>
+    <div class="process-step-text">
+      <strong>Империализм</strong>
+      Новая мера капитализма: экспорт капитала, раздел мира
+    </div>
+  </div>
+</div>
+
+<!-- Info panel -->
+<div class="info-panel" id="infoPanel">
+  <h4 id="infoTitle"></h4>
+  <p id="infoText"></p>
+</div>
+
+<script>
+const info = {
+  freeze: {
+    title: 'Узел 0°C — замерзание/таяние',
+    text: 'При 0°C вода не постепенно густеет, а скачкообразно становится льдом (или наоборот). Это узел узловой линии — точка, где количественное изменение (температура) переходит в качественное (агрегатное состояние). Субстрат H₂O остаётся тем же.'
+  },
+  boil: {
+    title: 'Узел 100°C — кипение/конденсация',
+    text: 'При 100°C жидкая вода скачкообразно становится паром. Постепенность (нагрев от 20 до 99°C) необходима, но сама по себе недостаточна. Скачок завершает количественный процесс, а не отменяет его.'
+  }
+};
+
+document.querySelectorAll('.scale-node').forEach(node => {
+  node.addEventListener('click', () => {
+    const key = node.dataset.info;
+    const data = info[key];
+    if (!data) return;
+    const panel = document.getElementById('infoPanel');
+    document.getElementById('infoTitle').textContent = data.title;
+    document.getElementById('infoText').textContent = data.text;
+    panel.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>

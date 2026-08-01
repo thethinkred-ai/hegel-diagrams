@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Реальная мера — цепь выведения категорий</title>
+<style>
+:root {
+  --bg: #fafafa;
+  --text: #1a1a1a;
+  --node-bg: #ffffff;
+  --node-border: #333333;
+  --accent: #C9A227;
+  --accent-light: #f5e9c8;
+  --arrow: #555555;
+  --contradiction: #c0392b;
+  --resolution: #2c7a2c;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  padding: 2rem 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+h1 {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+.subtitle {
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+
+/* ── Chain diagram ── */
+.chain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin: 2rem 0;
+}
+.chain-node {
+  background: var(--node-bg);
+  border: 2px solid var(--node-border);
+  border-radius: 12px;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  min-width: 280px;
+  position: relative;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.chain-node:hover {
+  border-color: var(--accent);
+  box-shadow: 0 2px 12px rgba(201, 162, 39, 0.3);
+  transform: translateY(-2px);
+}
+.chain-node.highlight {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+.chain-node .node-num {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  border-radius: 50%;
+  background: var(--node-border);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+.chain-node .node-desc {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: #666;
+  margin-top: 0.25rem;
+}
+.chain-arrow {
+  width: 2px;
+  height: 28px;
+  background: var(--arrow);
+  position: relative;
+}
+.chain-arrow::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid var(--arrow);
+}
+.chain-arrow .arrow-label {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.72rem;
+  color: #777;
+  white-space: nowrap;
+}
+
+/* ── Derivation schema ── */
+.derivation-schema {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+}
+.derivation-schema h3 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.derivation-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin: 0.5rem 0;
+}
+.derivation-cell {
+  flex: 1;
+  padding: 0.6rem 0.8rem;
+  text-align: center;
+  font-size: 0.85rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.derivation-cell .cell-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #999;
+  margin-bottom: 0.2rem;
+}
+.derivation-cell .cell-value {
+  font-weight: 600;
+}
+.derivation-cell.source { background: #e8f0fe; }
+.derivation-cell.contradiction { background: #fce8e8; }
+.derivation-cell.resolution { background: #e8f8e8; }
+.derivation-cell.result { background: var(--accent-light); }
+.derivation-arrow {
+  display: flex;
+  align-items: center;
+  padding: 0 0.3rem;
+  color: var(--arrow);
+  font-size: 1.2rem;
+}
+
+/* ── Legend ── */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin: 1.5rem 0;
+  font-size: 0.8rem;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.legend-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+}
+
+/* ── Info panel ── */
+.info-panel {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1.2rem;
+  margin-top: 1.5rem;
+  display: none;
+}
+.info-panel.active { display: block; }
+.info-panel h4 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent);
+}
+.info-panel p {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #444;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .chain-node { min-width: 200px; font-size: 0.9rem; }
+  .derivation-row { flex-direction: column; }
+  .derivation-arrow { transform: rotate(90deg); justify-content: center; padding: 0.2rem 0; }
+}
+</style>
+</head>
+<body>
+
+<h1>Реальная мера — цепь выведения</h1>
+<p class="subtitle">Учение о бытии → Мера → Реальная мера → Безмерное → Сущность</p>
+
+<!-- Legend -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#e8f0fe"></div>Исходная категория</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#fce8e8"></div>Противоречие</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#e8f8e8"></div>Разрешение</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--accent-light)"></div>Новая категория</div>
+</div>
+
+<!-- Main chain -->
+<div class="chain" id="mainChain">
+  <div class="chain-node" data-info="spec">
+    <span class="node-num">1</span>Специфицирующая мера
+    <span class="node-desc">внешнее правило: сколько вещь может выдержать</span>
+  </div>
+  <div class="chain-arrow"><span class="arrow-label">исключение требует отношения</span></div>
+
+  <div class="chain-node highlight" data-info="relation">
+    <span class="node-num">2</span>Отношение самостоятельных мер
+    <span class="node-desc">избирательное сродство: соединение и исключение</span>
+  </div>
+  <div class="chain-arrow"><span class="arrow-label">ряд сродств требует объяснения</span></div>
+
+  <div class="chain-node" data-info="nodal">
+    <span class="node-num">3</span>Узловая линия
+    <span class="node-desc">закономерный ряд: количество → качество в узле</span>
+  </div>
+  <div class="chain-arrow"><span class="arrow-label">бесконечный ряд мер требует выхода</span></div>
+
+  <div class="chain-node" data-info="measureless">
+    <span class="node-num">4</span>Безмерное
+    <span class="node-desc">снятая мера: выход за пределы всякой отдельной меры</span>
+  </div>
+  <div class="chain-arrow"><span class="arrow-label">субстрат становится основанием</span></div>
+
+  <div class="chain-node" data-info="essence">
+    <span class="node-num">5</span>Сущность
+    <span class="node-desc">опосредствованное бытие: рефлексия, внутренние связи</span>
+  </div>
+</div>
+
+<!-- Derivation schema -->
+<div class="derivation-schema">
+  <h3>Логика выведения: как одна категория порождает следующую</h3>
+
+  <div class="derivation-row">
+    <div class="derivation-cell source">
+      <span class="cell-label">Исходная</span>
+      <span class="cell-value">Специфицирующая мера</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell contradiction">
+      <span class="cell-label">Противоречие</span>
+      <span class="cell-value">Мера исключает другие, но исключение уже есть отношение</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell resolution">
+      <span class="cell-label">Разрешение</span>
+      <span class="cell-value">Меры вступают в реальное взаимодействие</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell result">
+      <span class="cell-label">Новая</span>
+      <span class="cell-value">Отношение мер</span>
+    </div>
+  </div>
+
+  <div class="derivation-row">
+    <div class="derivation-cell source">
+      <span class="cell-label">Исходная</span>
+      <span class="cell-value">Отношение мер</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell contradiction">
+      <span class="cell-label">Противоречие</span>
+      <span class="cell-value">Одна мера вступает в множество отношений — ряд требует объяснения</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell resolution">
+      <span class="cell-label">Разрешение</span>
+      <span class="cell-value">Субстрат организует ряд в закономерную последовательность</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell result">
+      <span class="cell-label">Новая</span>
+      <span class="cell-value">Узловая линия</span>
+    </div>
+  </div>
+
+  <div class="derivation-row">
+    <div class="derivation-cell source">
+      <span class="cell-label">Исходная</span>
+      <span class="cell-value">Узловая линия</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell contradiction">
+      <span class="cell-label">Противоречие</span>
+      <span class="cell-value">Каждый скачок даёт лишь новую меру — бесконечный ряд</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell resolution">
+      <span class="cell-label">Разрешение</span>
+      <span class="cell-value">Выход за пределы всякой отдельной меры</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell result">
+      <span class="cell-label">Новая</span>
+      <span class="cell-value">Безмерное</span>
+    </div>
+  </div>
+
+  <div class="derivation-row">
+    <div class="derivation-cell source">
+      <span class="cell-label">Исходная</span>
+      <span class="cell-value">Безмерное</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell contradiction">
+      <span class="cell-label">Противоречие</span>
+      <span class="cell-value">Должно быть мерой и отрицанием меры одновременно</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell resolution">
+      <span class="cell-label">Разрешение</span>
+      <span class="cell-value">Субстрат становится основанием — рефлексия</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell result">
+      <span class="cell-label">Новая</span>
+      <span class="cell-value">Сущность</span>
+    </div>
+  </div>
+</div>
+
+<!-- Info panel -->
+<div class="info-panel" id="infoPanel">
+  <h4 id="infoTitle"></h4>
+  <p id="infoText"></p>
+</div>
+
+<script>
+const info = {
+  spec: {
+    title: 'Специфицирующая мера',
+    text: 'Внешнее правило: столько-то количественного изменения данная вещь может выдержать без качественного перелома. Но она рассматривает меру как нечто одинокое, не вступающее в реальное взаимодействие.'
+  },
+  relation: {
+    title: 'Отношение самостоятельных мер',
+    text: 'Меры вступают в избирательное сродство — соединяются и исключаются определённым образом. Не всякие меры соединяются: избирательность есть логическая необходимость, а не эмпирический факт. Нейтральная мера — соединение, где каждая сохраняется как момент.'
+  },
+  nodal: {
+    title: 'Узловая линия отношений меры',
+    text: 'Субстрат организует ряд мер в закономерную последовательность. В межузловых промежутках качество безразлично к количеству. В узлах количество переходит в качество — скачок. Постепенность и скачок — две стороны единого процесса развития.'
+  },
+  measureless: {
+    title: 'Безмерное (das Maßlose)',
+    text: 'Снятая мера: бытие, где количественное изменение разорвало связь с качеством. Не отсутствие меры, а её снятие — устранение с сохранением. Субстрат становится основанием. Знак приближения сущности.'
+  },
+  essence: {
+    title: 'Сущность',
+    text: 'Опосредствованное бытие. Уже не дано непосредственно, а раскрывается через систему внутренних отношений. Бытие, прошедшее через безмерное, начинает снимать себя в рефлексию. Аналог: Маркс начинает с товара, но переходит к стоимости — сущности товарного мира.'
+  }
+};
+
+document.querySelectorAll('.chain-node').forEach(node => {
+  node.addEventListener('click', () => {
+    const key = node.dataset.info;
+    const data = info[key];
+    if (!data) return;
+    document.querySelectorAll('.chain-node').forEach(n => n.classList.remove('highlight'));
+    node.classList.add('highlight');
+    const panel = document.getElementById('infoPanel');
+    document.getElementById('infoTitle').textContent = data.title;
+    document.getElementById('infoText').textContent = data.text;
+    panel.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>

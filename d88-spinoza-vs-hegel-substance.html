@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Спиноза vs Гегель — субстанция как мощь</title>
+<style>
+:root {
+  --bg: #fafafa;
+  --text: #1a1a1a;
+  --accent: #C9A227;
+  --accent-light: #f5e9c8;
+  --spinoza: #4a6fa5;
+  --spinoza-light: #e8f0fe;
+  --hegel: #b87333;
+  --hegel-light: #fdf0e3;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  padding: 2rem 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+h1 { font-size: 1.5rem; text-align: center; margin-bottom: 0.5rem; }
+.subtitle { text-align: center; color: #666; font-size: 0.9rem; margin-bottom: 2rem; }
+
+.compare-table {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin: 2rem 0;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+.compare-header {
+  padding: 1rem;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #fff;
+}
+.compare-header.spinoza { background: var(--spinoza); }
+.compare-header.hegel { background: var(--hegel); }
+.compare-cell {
+  padding: 0.8rem 1rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  border-top: 1px solid #eee;
+}
+.compare-cell.spinoza { background: var(--spinoza-light); }
+.compare-cell.hegel { background: var(--hegel-light); }
+.compare-cell .cell-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #999;
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+.vs-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+.vs-circle {
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.insight {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-left: 4px solid var(--accent);
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  margin: 2rem 0;
+}
+.insight h3 { font-size: 1rem; color: var(--accent); margin-bottom: 0.5rem; }
+.insight p { font-size: 0.9rem; line-height: 1.6; color: #444; }
+
+.flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+}
+.flow-box {
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+}
+.flow-box.spinoza { background: var(--spinoza-light); border: 2px solid var(--spinoza); }
+.flow-box.hegel { background: var(--hegel-light); border: 2px solid var(--hegel); }
+.flow-box.result { background: var(--accent-light); border: 2px solid var(--accent); }
+.flow-arrow { font-size: 1.5rem; color: #999; }
+
+@media (max-width: 600px) {
+  .compare-table { grid-template-columns: 1fr; }
+  .compare-header { font-size: 0.95rem; }
+}
+</style>
+</head>
+<body>
+
+<h1>Спиноза vs Гегель</h1>
+<p class="subtitle">Субстанция как «бездна» vs субстанция как мощь</p>
+
+<div class="vs-badge">
+  <div class="vs-circle">VS</div>
+</div>
+
+<div class="flow">
+  <div class="flow-box spinoza">Субстанция<br><small>causa sui, в себе</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box hegel">Субстанция = мощь<br><small>порождает акциденции</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box result">Причинность<br><small>субстанция → субъект</small></div>
+</div>
+
+<div class="compare-table">
+  <div class="compare-header spinoza">Спиноза</div>
+  <div class="compare-header hegel">Гегель</div>
+
+  <div class="compare-cell spinoza">
+    <span class="cell-label">Субстанция</span>
+    Единая субстанция — природа/Бог. Causa sui. Всё вытекает из неё с необходимостью.
+  </div>
+  <div class="compare-cell hegel">
+    <span class="cell-label">Субстанция</span>
+    Субстанция — не неподвижная основа, а мощь (Macht). Порождает акциденции и уничтожает их.
+  </div>
+
+  <div class="compare-cell spinoza">
+    <span class="cell-label">Акциденции</span>
+    Преходящие состояния. Исчезают в субстанции. Не имеют самостоятельного бытия.
+  </div>
+  <div class="compare-cell hegel">
+    <span class="cell-label">Акциденции</span>
+    Моменты движения субстанции. Богатство субстанции. Субстанция существует только через них.
+  </div>
+
+  <div class="compare-cell spinoza">
+    <span class="cell-label">Развитие</span>
+    Нет развития. Всё дано раз и навсегда. Атрибуты вечны, модусы — состояния.
+  </div>
+  <div class="compare-cell hegel">
+    <span class="cell-label">Развитие</span>
+    Развитие есть. Субстанция → акциденции → причинность. Каждая ступень — необходимый момент.
+  </div>
+
+  <div class="compare-cell spinoza">
+    <span class="cell-label">Субъективность</span>
+    Нет субъективности. Субстанция есть абсолютное, но лишь в себе, не для себя.
+  </div>
+  <div class="compare-cell hegel">
+    <span class="cell-label">Субъективность</span>
+    Субстанция должна стать субъектом. Causa sui предполагает различие — источник саморазвития.
+  </div>
+
+  <div class="compare-cell spinoza">
+    <span class="cell-label">Свобода</span>
+    Свободы нет — есть лишь необходимость. Человек — модус.
+  </div>
+  <div class="compare-cell hegel">
+    <span class="cell-label">Свобода</span>
+    Свобода есть истина необходимости. Субстанция становится свободной через самопознание.
+  </div>
+</div>
+
+<div class="insight">
+  <h3>Ключевой вывод</h3>
+  <p>
+    Спиноза остановился перед акциденцией: для неё акциденция — неистинное состояние, поглощаемое субстанцией. Гегель показывает, что именно в акциденциях субстанция обнаруживает себя. Causa sui уже предполагает различие причины и действия — и потому субстанция неизбежно переходит в причинность. Ленин: «надо быть спинозистом, чтобы понять Гегеля. Но надо пойти дальше Спинозы».
+  </p>
+</div>
+
+</body>
+</html>

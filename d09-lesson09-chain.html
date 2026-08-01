@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Рефлексия — цепь выведения</title>
+<style>
+:root {
+  --bg: #fafafa;
+  --text: #1a1a1a;
+  --node-bg: #ffffff;
+  --node-border: #333333;
+  --accent: #C9A227;
+  --accent-light: #f5e9c8;
+  --arrow: #555555;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); padding: 2rem 1rem; max-width: 900px; margin: 0 auto; }
+h1 { font-size: 1.5rem; text-align: center; margin-bottom: 0.5rem; }
+.subtitle { text-align: center; color: #666; font-size: 0.9rem; margin-bottom: 2rem; }
+.chain { display: flex; flex-direction: column; align-items: center; gap: 0; margin: 2rem 0; }
+.chain-node {
+  background: var(--node-bg); border: 2px solid var(--node-border); border-radius: 12px;
+  padding: 0.7rem 1.5rem; font-size: 1rem; font-weight: 600; text-align: center;
+  min-width: 320px; position: relative; transition: all 0.3s ease; cursor: pointer;
+}
+.chain-node:hover { border-color: var(--accent); box-shadow: 0 2px 12px rgba(201,162,39,0.3); transform: translateY(-2px); }
+.chain-node.highlight { border-color: var(--accent); background: var(--accent-light); }
+.chain-node .node-num {
+  display: inline-block; width: 24px; height: 24px; line-height: 24px; border-radius: 50%;
+  background: var(--node-border); color: #fff; font-size: 0.75rem; font-weight: 700; margin-right: 0.5rem; vertical-align: middle;
+}
+.chain-node .node-desc { display: block; font-size: 0.78rem; font-weight: 400; color: #666; margin-top: 0.25rem; }
+.chain-arrow { width: 2px; height: 28px; background: var(--arrow); position: relative; }
+.chain-arrow::after {
+  content: ''; position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%);
+  width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 8px solid var(--arrow);
+}
+.chain-arrow .arrow-label { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 0.72rem; color: #777; white-space: nowrap; }
+.derivation-schema { background: #fff; border: 1px solid #e0e0e0; border-radius: 16px; padding: 1.5rem; margin: 2rem 0; }
+.derivation-schema h3 { font-size: 1.1rem; margin-bottom: 1rem; text-align: center; }
+.derivation-row { display: flex; align-items: stretch; gap: 0; margin: 0.5rem 0; }
+.derivation-cell { flex: 1; padding: 0.6rem 0.8rem; text-align: center; font-size: 0.85rem; border-radius: 8px; display: flex; flex-direction: column; justify-content: center; }
+.derivation-cell .cell-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: #999; margin-bottom: 0.2rem; }
+.derivation-cell .cell-value { font-weight: 600; }
+.derivation-cell.source { background: #e8f0fe; }
+.derivation-cell.contradiction { background: #fce8e8; }
+.derivation-cell.resolution { background: #e8f8e8; }
+.derivation-cell.result { background: var(--accent-light); }
+.derivation-arrow { display: flex; align-items: center; padding: 0 0.3rem; color: var(--arrow); font-size: 1.2rem; }
+.info-panel { background: #fff; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.2rem; margin-top: 1.5rem; display: none; }
+.info-panel.active { display: block; }
+.info-panel h4 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--accent); }
+.info-panel p { font-size: 0.88rem; line-height: 1.5; color: #444; }
+@media (max-width: 600px) {
+  .chain-node { min-width: 240px; font-size: 0.9rem; }
+  .derivation-row { flex-direction: column; }
+  .derivation-arrow { transform: rotate(90deg); justify-content: center; padding: 0.2rem 0; }
+}
+</style>
+</head>
+<body>
+
+<h1>Рефлексия — цепь выведения</h1>
+<p class="subtitle">Рефлексия → Положительная рефлексия → Внешняя рефлексия → Определяющая рефлексия → Основание</p>
+
+<div class="chain" id="mainChain">
+  <div class="chain-node" data-info="1">
+    <span class="node-num">1</span>Положительная рефлексия
+    <span class="node-desc">сущность полагает себя; исходное тождество</span>
+  </div>
+  <div class="chain-arrow"><span class="arrow-label">сущность полагает себя</span></div>
+  <div class="chain-node" data-info="2">
+    <span class="node-num">2</span>Внешняя рефлексия
+    <span class="node-desc">смотрит на данное извне; сравнивает</span>
+  </div>
+  <div class="chain-arrow"><span class="arrow-label">смотрит извне на данное</span></div>
+  <div class="chain-node" data-info="3">
+    <span class="node-num">3</span>Определяющая рефлексия
+    <span class="node-desc">полагание и сравнение становятся определениями</span>
+  </div>
+  <div class="chain-arrow"><span class="arrow-label">определения становятся существенными</span></div>
+  <div class="chain-node" data-info="4">
+    <span class="node-num">4</span>Основание
+    <span class="node-desc">рефлексия определяет сущность как основание</span>
+  </div>
+  <div class="chain-arrow"><span class="arrow-label">рефлексия → основание → существование</span></div>
+</div>
+
+<div class="derivation-schema">
+  <h3>Логика выведения: как одна категория порождает следующую</h3>
+<div class="derivation-row">
+    <div class="derivation-cell source">
+      <span class="cell-label">Исходная</span>
+      <span class="cell-value">Сущность</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell contradiction">
+      <span class="cell-label">Противоречие</span>
+      <span class="cell-value">Полагает себя</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell resolution">
+      <span class="cell-label">Разрешение</span>
+      <span class="cell-value">Исходное тождество</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell result">
+      <span class="cell-label">Новая</span>
+      <span class="cell-value">Положительная рефлексия</span>
+    </div>
+  </div>
+<div class="derivation-row">
+    <div class="derivation-cell source">
+      <span class="cell-label">Исходная</span>
+      <span class="cell-value">Положительная рефлексия</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell contradiction">
+      <span class="cell-label">Противоречие</span>
+      <span class="cell-value">Смотрит извне</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell resolution">
+      <span class="cell-label">Разрешение</span>
+      <span class="cell-value">Сравнивает с данным</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell result">
+      <span class="cell-label">Новая</span>
+      <span class="cell-value">Внешняя рефлексия</span>
+    </div>
+  </div>
+<div class="derivation-row">
+    <div class="derivation-cell source">
+      <span class="cell-label">Исходная</span>
+      <span class="cell-value">Внешняя рефлексия</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell contradiction">
+      <span class="cell-label">Противоречие</span>
+      <span class="cell-value">Определения становятся существенными</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell resolution">
+      <span class="cell-label">Разрешение</span>
+      <span class="cell-value">Полагание = определение</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell result">
+      <span class="cell-label">Новая</span>
+      <span class="cell-value">Определяющая рефлексия</span>
+    </div>
+  </div>
+<div class="derivation-row">
+    <div class="derivation-cell source">
+      <span class="cell-label">Исходная</span>
+      <span class="cell-value">Определяющая рефлексия</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell contradiction">
+      <span class="cell-label">Противоречие</span>
+      <span class="cell-value">Сущность как основание</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell resolution">
+      <span class="cell-label">Разрешение</span>
+      <span class="cell-value">Основание для существования</span>
+    </div>
+    <div class="derivation-arrow">→</div>
+    <div class="derivation-cell result">
+      <span class="cell-label">Новая</span>
+      <span class="cell-value">Основание</span>
+    </div>
+  </div>
+</div>
+
+<div class="info-panel" id="infoPanel">
+  <h4 id="infoTitle"></h4>
+  <p id="infoText"></p>
+</div>
+
+<script>
+const info = {
+  1: { title: "Положительная рефлексия", text: "Сущность полагает себя. Исходное тождество: сущность = себе. Но это тождество абстрактно — оно ещё не имеет определений. Положительная рефлексия — начало движения сущности в себя." },
+  2: { title: "Внешняя рефлексия", text: "Смотрит на данное извне. Сравнивает сущность с тем, что есть. Внешняя рефлексия предполагает данное как чужое — но это данное есть само полагание сущности. Противоречие: внешнее оказывается внутренним." },
+  3: { title: "Определяющая рефлексия", text: "Полагание и сравнение становятся определениями. Рефлексия не просто смотрит — она определяет. Определения становятся существенными: они не внешни, а принадлежат самой сущности." },
+  4: { title: "Основание", text: "Рефлексия определяет сущность как основание. Основание — единство положительной и отрицательной рефлексии. Сущность как основание порождает существование. Это ведёт к явлению (урок 10)." }
+};
+
+document.querySelectorAll('.chain-node').forEach(node => {
+  node.addEventListener('click', () => {
+    const key = node.dataset.info;
+    const data = info[key];
+    if (!data) return;
+    document.querySelectorAll('.chain-node').forEach(n => n.classList.remove('highlight'));
+    node.classList.add('highlight');
+    const panel = document.getElementById('infoPanel');
+    document.getElementById('infoTitle').textContent = data.title;
+    document.getElementById('infoText').textContent = data.text;
+    panel.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>
